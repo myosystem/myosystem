@@ -1,0 +1,6 @@
+[submodule "mykernel"]
+	path = mykernel
+	url = https://github.com/myosystem/mykernel.git
+[submodule "mybootloader"]
+	path = mybootloader
+	url = https://github.com/myosystem/mybootloader.git
