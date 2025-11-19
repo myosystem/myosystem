@@ -7,3 +7,6 @@
 [submodule "mydisplay"]
 	path = mydisplay
 	url = https://github.com/myosystem/mydisplay.git
+[submodule "mylibc"]
+	path = mylibc
+	url = https://github.com/myosystem/mylibc.git
