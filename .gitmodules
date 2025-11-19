@@ -4,3 +4,6 @@
 [submodule "mybootloader"]
 	path = mybootloader
 	url = https://github.com/myosystem/mybootloader.git
+[submodule "mydisplay"]
+	path = mydisplay
+	url = https://github.com/myosystem/mydisplay.git
