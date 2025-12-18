@@ -21,6 +21,8 @@
 *.sh
 *.bat
 *.fd
+*.efi
+MOK.*
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
