@@ -10,3 +10,6 @@
 [submodule "mylibc"]
 	path = mylibc
 	url = https://github.com/myosystem/mylibc.git
+[submodule "myshell"]
+	path = myshell
+	url = https://github.com/myosystem/myshell
