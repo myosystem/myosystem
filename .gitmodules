@@ -13,3 +13,6 @@
 [submodule "myshell"]
 	path = myshell
 	url = https://github.com/myosystem/myshell
+[submodule "mygui"]
+	path = mygui
+	url = https://github.com/myosystem/mygui
