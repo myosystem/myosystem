@@ -363,3 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 *.md
 !README.md
+launch.vs.json
+tasks.vs.json
+CMakeSettings.json
+out/*

@@ -1,0 +1,49 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "wsl-debug",
+      "displayName": "WSL2 x64 Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": ["Linux"],
+          "intelliSenseMode": "linux-gcc-x64"
+        }
+      }
+    },
+    {
+      "name": "wsl-release",
+      "displayName": "WSL2 x64 Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": ["Linux"],
+          "intelliSenseMode": "linux-gcc-x64"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "wsl-debug",
+      "configurePreset": "wsl-debug",
+      "displayName": "WSL2 x64 Debug"
+    },
+    {
+      "name": "wsl-release",
+      "configurePreset": "wsl-release",
+      "displayName": "WSL2 x64 Release"
+    }
+  ]
+}
