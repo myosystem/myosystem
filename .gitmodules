@@ -19,3 +19,6 @@
 [submodule "mytools"]
 	path = mytools
 	url = https://github.com/myosystem/mytools.git
+[submodule "myterminal"]
+	path = myterminal
+	url = https://github.com/myosystem/myterminal.git
