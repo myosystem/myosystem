@@ -16,3 +16,6 @@
 [submodule "mygui"]
 	path = mygui
 	url = https://github.com/myosystem/mygui
+[submodule "mytools"]
+	path = mytools
+	url = https://github.com/myosystem/mytools.git
