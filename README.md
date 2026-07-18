@@ -26,11 +26,11 @@
 
 ### 1. MyBootloader (UEFI Bootloader)
 * **Tech:** EDK2 Framework
-* **Role:** Handles hardware initialization and loads the kernel compliant with the **Boot Protocol**.
+* **Role:** Reads the UEFI memory map to build the **physical-page bitmap + per-page refcount array**, sets up **4-level paging & HHDM**, acquires the **GOP framebuffer**, locates the **ACPI RSDP**, loads the GDT, then calls `ExitBootServices` and jumps to the kernel per the **Boot Protocol**.
 
 ### 2. MyKernel (The Core)
 * **Tech:** C++20, GNU Toolchain (GCC/LD)
-* **Role:** Manages core system resources including memory, scheduling, and interrupts.
+* **Role:** Core resource management — memory & paging, preemptive scheduling, interrupts, IPC, VFS, and device drivers.
 
 ### 3. MyDisplay (Graphics Subsystem)
 * **Tech:** Linear Framebuffer (Hardware Agnostic)
@@ -39,6 +39,32 @@
 ### 4. MyLibc (Custom Standard Library)
 * **Tech:** Freestanding C++
 * **Role:** A scratch-built implementation of the standard library with no external dependencies.
+
+### 5. MyGUI (Desktop Shell)
+* **Tech:** Message-driven client of MyDisplay
+* **Role:** Window manager / app launcher; routes keyboard & mouse input to the focused window.
+
+### 6. MyTerminal & MyShell (Console)
+* **Tech:** Pipe + message IPC
+* **Role:** Terminal emulator (window, character grid, ANSI escapes, keyboard & line-discipline) hosting **MyShell**, a stdin/stdout command interpreter. Cleanly split so any program can share the TTY.
+
+### 7. MyTools (Coreutils)
+* **Tech:** Freestanding userspace programs
+* **Role:** Command-line utilities (`ls`, `dir`, `echo`, `type`, `mkdir`, `rmdir`, `rm`, `clear`) exercising full file CRUD.
+
+---
+
+## Features
+
+* **Memory:** 4-level paging, physical-bitmap + virtual-page allocators, HHDM, demand-mapped indexed object pools (`NewObject`).
+* **Reference counting:** per-physical-page refcounts back Copy-on-Write; `File`, `Pipe`, and shared-memory handles are refcounted for safe sharing across `fork` / `dup`.
+* **Processes:** preemptive scheduler, Copy-on-Write `fork` / `exec`, zombie reaping, inherited controlling terminal (console).
+* **IPC:** fixed-size messages (unicast **and broadcast**, unknown types dropped), byte-stream pipes (non-blocking + readiness-notify), shared memory.
+* **Filesystem:** GPT partitioning, FAT32 with **full CRUD** (create / read / write / truncate / delete, `mkdir` / `rmdir`), multi-partition support.
+* **Storage drivers:** NVMe, AHCI (SATA), xHCI (USB mass storage).
+* **Input:** USB HID mouse + keyboard over xHCI (HID report-descriptor parsing).
+* **Graphics:** linear-framebuffer compositor — per-window buffers, z-ordering, transparency, click hit-testing.
+* **Power (ACPI):** proper shutdown (S5 via FADT + `_S5`) and reboot (FADT reset register), with 8042 / emulator fallbacks.
 
 ---
 
@@ -87,6 +113,7 @@ typedef struct {
     uint32_t framebufferFormat;
 
     uint64_t* physbm;
+    uint64_t* refcount;
     uint64_t  physbm_size;
     
     void* rsdp;

@@ -30,11 +30,12 @@ add_subdirectory(mygui)
 add_subdirectory(myshell)
 add_subdirectory(myterminal)
 add_subdirectory(mytools)
+add_subdirectory(myprograms)
 add_subdirectory(mykernel)
 
 add_custom_target(makeimg ALL
     COMMAND bash -c "set -e && LOOP=$(sudo losetup -f) && sudo losetup -P $LOOP ${CMAKE_SOURCE_DIR}/myos.img && sudo mkdir -p /mnt/efi && sudo mount \"$LOOP\"p1 /mnt/efi && sudo rm -rf /mnt/efi/* && sudo cp -r ${BOOT_OUT_DIR}/* /mnt/efi/ && sudo umount /mnt/efi && sudo losetup -d $LOOP && echo [*] Done."
-    DEPENDS mykernel kernel_stubs myshell myterminal mygui mydisplay tools_all
+    DEPENDS mykernel kernel_stubs myshell myterminal mygui mydisplay tools_all programs_all
     COMMENT "Creating disk image..."
     VERBATIM
 )
