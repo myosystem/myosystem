@@ -367,3 +367,4 @@ launch.vs.json
 tasks.vs.json
 CMakeSettings.json
 out/*
+/.editorconfig
